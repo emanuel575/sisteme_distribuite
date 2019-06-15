@@ -62,5 +62,18 @@ namespace MyWebService
             }
             return res;
         }
+        [WebMethod]
+        public string returneazaStudenti(string grupa)
+        {
+            string res = "";
+            foreach(var std in studenti)
+            {
+                if(std.grupa == grupa)
+                {
+                    res += std.nume + " " + "\r\n";
+                }
+            }
+            return res;
+        }
     }
 }
