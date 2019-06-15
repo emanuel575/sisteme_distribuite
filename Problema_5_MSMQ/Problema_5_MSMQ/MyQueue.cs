@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Messaging;
+using System.Threading;
 
 namespace Problema_5_MSMQ
 {
@@ -48,10 +49,15 @@ namespace Problema_5_MSMQ
         {
             try
             {
-                var messages = myQ.GetAllMessages();
-                foreach(var msg in messages)
+                while (true)
                 {
-                    Console.WriteLine("I received from queue: {0}",msg.Body);
+                    Console.Clear();
+                    var messages = myQ.GetAllMessages();
+                    foreach (var msg in messages)
+                    {
+                        Console.WriteLine("I received from queue: {0}", msg.Body);
+                    }
+                    Thread.Sleep(60);
                 }
             }
             catch (MessageQueueException e)
