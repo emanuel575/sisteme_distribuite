@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Problema_5_MSMQ
+﻿namespace Problema_5_MSMQ
 {
     public class Student
     {
