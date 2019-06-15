@@ -4,19 +4,12 @@ using System.Threading;
 
 namespace Problema_5_MSMQ
 {
-    public class MyQueue
+    public static class MyQueue
     {
-        private string name;
-        private MessageQueue myQ;
-        ~MyQueue()
-        {
-        }
-        public MyQueue(string name)
-        {
-            this.name = name;
-        }
+        public static string name { get; set; }
+        private static MessageQueue myQ;
 
-        public bool createQueue()
+        public static bool createQueue()
         {
             try
             {
@@ -40,7 +33,7 @@ namespace Problema_5_MSMQ
             return true;
         }
 
-        public void sendMsg(Student std)
+        public static void sendMsg(Student std)
         {
             try
             {
@@ -53,7 +46,7 @@ namespace Problema_5_MSMQ
                 Console.WriteLine("Can't send message due to error : {0}", e.Message);
             }
         }
-        public void receiveMsg()
+        public static void receiveMsg()
         {
             try
             {
@@ -63,24 +56,24 @@ namespace Problema_5_MSMQ
                     var messages = myQ.GetAllMessages();
                     foreach (var msg in messages)
                     {
-                        Console.WriteLine("Studentul: {0}", msg.Body.ToString());
+                        Console.WriteLine( msg.Body.ToString());
                     }
                     Thread.Sleep(30);
                 }
             }
             catch (MessageQueueException e)
             {
-                Console.WriteLine("Can't receive message due to error : {0} type is : {1}", e.Message, e.GetType());
+                Console.WriteLine("MSMQ EXP Can't receive message due to error : {0} type is : {1}", e.Message, e.GetType());
             }
             catch (Exception e)
             {
-                Console.WriteLine("Can't receive message due to error : {0} type is : {1}", e.Message, e.GetType());
+                Console.WriteLine("Another exp Can't receive message due to error : {0} type is : {1}", e.Message, e.GetType());
             }
         }
-        public void DestroyQueue()
+        public static void DestroyQueue()
         {
-            MessageQueue.Delete(this.name);
-            this.name = null;
+            MessageQueue.Delete(name);
+            name = null;
         }
     }
 }
