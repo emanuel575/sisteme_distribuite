@@ -8,11 +8,11 @@ namespace MyWebService
 {
     public class Notare : WebService
     {
-        static  int id_materii = 0;
+        static int id_materii = 0;
         static int id_studenti = 0;
-        List<Materie> materii = new List<Materie>();
-        List<Student> studenti = new List<Student>();
-        List<Student_Materie> student_nota_materie = new List<Student_Materie>();
+        static List<Materie> materii = new List<Materie>();
+        static List<Student> studenti = new List<Student>();
+        static List<Student_Materie> student_nota_materie = new List<Student_Materie>();
 
         [WebMethod]
         public string HelloWorld()
@@ -27,29 +27,40 @@ namespace MyWebService
             return materii.Last().id;
         }
         [WebMethod]
-        public int adaugaStudent(string nume,string grupa)
+        public int adaugaStudent(string nume, string grupa)
         {
             studenti.Add(new Student(nume, grupa));
             studenti.Last().id = (++id_studenti);
             return studenti.Last().id;
         }
         [WebMethod]
-        public void adaugaNota(int nota,int idStudent, int idMateire)
+        public void adaugaNota(int nota, int idStudent, int idMateire)
         {
             student_nota_materie.Add(new Student_Materie(idStudent, idMateire, nota));
         }
         [WebMethod]
-        public Dictionary<string,int> returneazaNote(int idMateire)
+        public string returneazaNote(int idMateire)
         {
             Dictionary<string, int> legatura = new Dictionary<string, int>();
-            foreach(var x in student_nota_materie)
+            foreach (var x in student_nota_materie)
             {
-                if(idMateire == x.materie_id)
+                if (idMateire == x.materie_id)
                 {
-                    if(x.student_id == studenti.Find())
+                    foreach (var std in studenti)
+                    {
+                        if(x.student_id == std.id)
+                        {
+                            legatura.Add(std.nume, x.nota);
+                        }
+                    }
                 }
             }
-            return legatura;
+            string res = "";
+            foreach(var x in legatura)
+            {
+                res += "Studentul : " + x.Key + " are nota : " + x.Value + "\r\n";
+            }
+            return res;
         }
     }
 }
