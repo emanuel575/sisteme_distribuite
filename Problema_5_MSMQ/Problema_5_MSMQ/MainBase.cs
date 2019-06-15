@@ -6,8 +6,8 @@ namespace Problema_5_MSMQ
     {
         static void Main(string[] args)
         {
-            MyQueue.name = @".\Private$\testtam";
-            MyQueue.createQueue();
+            MyQueue q = new MyQueue();
+            q.createQueue(@".\private$\plm");
         }
     }
 }

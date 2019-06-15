@@ -23,6 +23,9 @@ namespace SenderMSMQ
 
         static int Main(string[] args)
         {
+            MyQueue q = new MyQueue();
+            MyQueue.name = @".\private$\plm";
+            MyQueue.myQ.Path = @".\private$\plm";
             bool menuOpt = true;
             while (menuOpt)
             {
@@ -34,12 +37,12 @@ namespace SenderMSMQ
                     case 1:
                         {
                             var std = createStudent();
-                            MyQueue.sendMsg(std);
+                            q.sendMsg(std);
                             break;
                         }
                     case 2:
                         {
-                            MyQueue.DestroyQueue();
+                            q.DestroyQueue();
                             menuOpt = false;
                             break;
                         }

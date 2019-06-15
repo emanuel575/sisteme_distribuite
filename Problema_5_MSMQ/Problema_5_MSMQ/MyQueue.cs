@@ -4,13 +4,14 @@ using System.Threading;
 
 namespace Problema_5_MSMQ
 {
-    public static class MyQueue
+    public class MyQueue
     {
         public static string name { get; set; }
-        private static MessageQueue myQ;
+        public static MessageQueue myQ = new MessageQueue();
 
-        public static bool createQueue()
+        public bool createQueue(string path)
         {
+            name = path;
             try
             {
                 if (!MessageQueue.Exists(name))
@@ -33,20 +34,20 @@ namespace Problema_5_MSMQ
             return true;
         }
 
-        public static void sendMsg(Student std)
+        public void sendMsg(Student std)
         {
             try
             {
-                string msg = std.nume + " " + std.prenume + " " + std.grupa + "\n";
+                string msgToBeSend = std.nume + " " + std.prenume + " " + std.grupa + "\n";
+                Message msg = new Message(msgToBeSend);
                 myQ.Send(msg);
             }
-
             catch (Exception e)
             {
-                Console.WriteLine("Can't send message due to error : {0}", e.Message);
+                Console.WriteLine("Can't send message to {0} due to error : {1}", myQ.Path, e.GetType());
             }
         }
-        public static void receiveMsg()
+        public void receiveMsg()
         {
             try
             {
@@ -56,7 +57,8 @@ namespace Problema_5_MSMQ
                     var messages = myQ.GetAllMessages();
                     foreach (var msg in messages)
                     {
-                        Console.WriteLine( msg.Body.ToString());
+                        msg.Formatter = new XmlMessageFormatter(new string[] { "System.String,mscorlib" });
+                        Console.WriteLine("Studentul : {0}",msg.Body.ToString());
                     }
                     Thread.Sleep(30);
                 }
@@ -70,10 +72,17 @@ namespace Problema_5_MSMQ
                 Console.WriteLine("Another exp Can't receive message due to error : {0} type is : {1}", e.Message, e.GetType());
             }
         }
-        public static void DestroyQueue()
+        public void DestroyQueue()
         {
-            MessageQueue.Delete(name);
-            name = null;
+            try
+            {
+                MessageQueue.Delete(name);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error deleting {0} due to error {1}", myQ.Path, e.Message);
+            }
+            //name = null;
         }
     }
 }

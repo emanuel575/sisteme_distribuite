@@ -11,7 +11,10 @@ namespace ReceiverMSMQ
     {
         static void Main(string[] args)
         {
-            MyQueue.receiveMsg();
+            MyQueue q = new MyQueue();
+            MyQueue.name = @".\private$\plm";
+            MyQueue.myQ.Path = @".\private$\plm";
+            q.receiveMsg();
         }
     }
 }
