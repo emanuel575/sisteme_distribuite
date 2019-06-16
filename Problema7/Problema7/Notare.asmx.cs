@@ -6,21 +6,38 @@ using System.Web.Services;
 
 namespace Problema7
 {
-    /// <summary>
-    /// Summary description for Notare
-    /// </summary>
-    [WebService(Namespace = "http://tempuri.org/")]
-    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-    // [System.Web.Script.Services.ScriptService]
-    public class Notare : System.Web.Services.WebService
+    public class Notare : WebService
     {
 
         [WebMethod]
         public string HelloWorld()
         {
             return "Hello World";
+        }
+        [WebMethod]
+        public int adaugaMaterie(string nume)
+        {
+            return NotareObj.adaugaMaterie(nume);
+        }
+        [WebMethod]
+        public int adaugaStudent(string nume, string grupa)
+        {
+            return NotareObj.adaugaStudent(nume, grupa);
+        }
+        [WebMethod]
+        public void adaugaNota(int nota,int idStudent, int idMaterie)
+        {
+            NotareObj.adaugaNota(nota, idStudent, idMaterie);
+        }
+        [WebMethod]
+        public string returneazaNote(int idMaterie)
+        {
+            return NotareObj.returneazaNote(idMaterie);
+        }
+        [WebMethod]
+        public string returneazaStudenti(string grupa)
+        {
+            return NotareObj.returneazaStudenti(grupa);
         }
     }
 }

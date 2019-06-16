@@ -67,10 +67,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Notare.asmx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Materie.cs" />
+    <Compile Include="Notare.asmx.cs">
+      <DependentUpon>Notare.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NotareObj.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Student.cs" />
+    <Compile Include="Student_Materie.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
