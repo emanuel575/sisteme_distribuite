@@ -11,6 +11,7 @@ namespace Problema12
     {
         public static void multiply(int[] arr, int alpha)
         {
+            Console.WriteLine(Thread.CurrentThread.Name);
             int n = arr.Length;
             for (int i = 0; i < n; i++)
             {
@@ -20,11 +21,13 @@ namespace Problema12
 
         public static void sort(int[] arr)
         {
+            Console.WriteLine(Thread.CurrentThread.Name);
             Array.Sort(arr);
         }
 
         public static void print(int[] arr)
         {
+            Console.WriteLine(Thread.CurrentThread.Name);
             foreach (var el in arr)
             {
                 Console.Write(el + " ");
@@ -39,8 +42,11 @@ namespace Problema12
 
             Thread[] threads = new Thread[3];
             threads[0] = new Thread(() => multiply(arr, 3));
+            threads[0].Name = "Multiply Thread";
             threads[1] = new Thread(() => sort(arr));
+            threads[1].Name = "Sort Thread";
             threads[2] = new Thread(() => print(arr));
+            threads[2].Name = "Print Thread";
 
             foreach(var t in threads)
             {
