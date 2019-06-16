@@ -24,6 +24,7 @@ namespace Problema10
                 n.WaitOne();
                 Thread t = new Thread(() => sum(arr, start + 2));
                 t.Start();
+                Console.WriteLine(t.ToString());
                 n.ReleaseMutex();
             }
             else
